@@ -1,4 +1,11 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align='center'>
+<img src="https://github.com/Jauharmuhammed/chatgpt-edge-runtime/blob/main/assets/Home.png" width='70%' >
+</p>
+<br>
+
+A simple ChatGPT Clone running on edge runtime using Vercel AI SDK
+
+<br>
 
 ## Getting Started
 
