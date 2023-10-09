@@ -2,18 +2,19 @@
 
 import Message from "@/components/Message";
 import Empty from "@/components/empty";
+import ScrollDownButton from "@/components/scroll-down-button";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useChat } from "ai/react";
 import { SendHorizonal } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 export default function Home() {
     const { messages, input, handleInputChange, handleSubmit } = useChat();
     const bottomRef = useRef(null);
 
-    const [isPromptEmpty, setIsPromptEmpty] = useState<boolean>(false);
+    const [isPromptEmpty, setIsPromptEmpty] = useState<boolean>(true);
 
     // Function to submit form when Enter key is pressed and the Shift key is not held down (to allow for multiline input),
     const handleEnterKeyDown = (e: any) => {
@@ -23,14 +24,35 @@ export default function Home() {
         }
     };
 
+    const scrollToBottom = () => {
+        window.scrollTo({
+            behavior: "smooth",
+            top: document.body.scrollHeight,
+        });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
+    useEffect(() => {
+      if(input === ''){
+        setIsPromptEmpty(true)
+      } else {
+        setIsPromptEmpty(false)
+      }
+
+    }, [input])
+
+
     return (
         <div className="flex flex-col h-full w-full items-center justify-between">
             {messages.length === 0 ? (
                 <Empty />
             ) : (
                 <div className="w-full flex flex-col items-center h-full mt-12 md:mt-0">
-                    {messages.map((message, index) => (
-                        <Message id={`message-${index}`} key={index} message={message} />
+                    {messages.map((message) => (
+                        <Message id={`message-${message.id}`} key={message.id} message={message} />
                     ))}
                     <div
                         ref={bottomRef}
@@ -50,16 +72,14 @@ export default function Home() {
                             className="w-full py-2 border-0 outline-none text-slate-900 bg-transparent focus-visible:ring-0 focus-visible:ring-transparent"
                             placeholder="Send a message"
                             value={input}
-                            onKeyDown={(e) => {
-                                handleEnterKeyDown(e);
-                            }}
                             onChange={handleInputChange}
                         />
                         <Button
                             type="submit"
                             variant="link"
+                            disabled={isPromptEmpty}
                             className={cn("mt-auto duration-500 w-10 h-10 p-2", {
-                                "bg-emerald-400": !isPromptEmpty,
+                                "bg-emerald-500": !isPromptEmpty,
                             })}>
                             <SendHorizonal
                                 className={cn("text-slate-700", {
@@ -73,6 +93,7 @@ export default function Home() {
                 <p className="text-xs mt-2 text-center text-slate-500">
                     BeyondGPT may produce inaccurate information about people, places, or facts.
                 </p>
+                <ScrollDownButton />
             </div>
         </div>
     );

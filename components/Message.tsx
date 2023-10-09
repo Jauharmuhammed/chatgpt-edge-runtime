@@ -14,7 +14,7 @@ type MessageType = {
 const Message = ({ message, id }: { message: MessageType; id: string }) => {
     const preRef = useRef<HTMLPreElement | null>(null);
 
-    function handleCopy() {
+    const handleCopy = () => {
         try {
             navigator.clipboard.writeText(preRef.current?.innerText!);
         } catch {
@@ -28,7 +28,15 @@ const Message = ({ message, id }: { message: MessageType; id: string }) => {
         } finally {
             toast("Copied to Clipboard");
         }
-    }
+    };
+
+    // return (
+    //     <div>
+    //         <div className="">
+    //             {message.role} : {message.content}
+    //         </div>
+    //     </div>
+    // );
 
     return (
         <div

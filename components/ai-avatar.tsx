@@ -1,12 +1,10 @@
-import { Zap } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback } from "./ui/avatar";
 
 const AiAvatar = () => {
     return (
         <Avatar>
-            <AvatarImage src="./logo.png" />
             <AvatarFallback>
-                <div className="w-10 h-10 flex justify-center items-center bg-emerald-400">
+                <div className="w-10 h-10 flex justify-center items-center bg-emerald-500">
                     <svg
                         width="20"
                         height="20"
